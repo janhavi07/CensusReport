@@ -47,9 +47,6 @@ public class CensusAnalyser {
 
 
     public String getStateWiseSortedCensusData() throws CensusAnalyserException {
-        //            Reader reader = Files.newBufferedReader(Paths.get(indiaCensusCsvFilePath));
-//            ICSVBuilder icsvBuilder=CSVBuilderFactory.createCSVBuilder();
-//            List<IndiaCensusCSV> censusCSVList=icsvBuilder.getCSVFileList(reader,IndiaCensusCSV.class);
         if( censusCSVList==null ||censusCSVList.size()==0){
             throw new CensusAnalyserException("No census Data",CensusAnalyserException.ExceptionType.NO_CENSUS_DATA);
         }
