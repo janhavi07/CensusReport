@@ -33,4 +33,24 @@ public class CensusAnalyser {
                     CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE);
         }
     }
+
+    public int loadStateCode(String indianStateCode) throws CensusAnalyserException {
+        try {
+            Reader reader = Files.newBufferedReader(Paths.get(indianStateCode));
+            CsvToBeanBuilder<IndiaStateCode> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
+            csvToBeanBuilder.withType(IndiaStateCode.class);
+            csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
+            CsvToBean<IndiaStateCode> csvToBean = csvToBeanBuilder.build();
+            Iterator<IndiaStateCode> censusCSVIterator = csvToBean.iterator();
+            Iterable<IndiaStateCode> csvIterable = () -> censusCSVIterator;
+            int namOfEateries = (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
+            return namOfEateries;
+        } catch (IOException e) {
+            throw new CensusAnalyserException(e.getMessage(),
+                    CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
+        }catch (RuntimeException e){
+            throw new CensusAnalyserException(e.getMessage(),
+                    CensusAnalyserException.ExceptionType.HEADER_INCORRECT);
+        }
+    }
 }
