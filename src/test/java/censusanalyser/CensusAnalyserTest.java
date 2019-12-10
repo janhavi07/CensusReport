@@ -10,6 +10,7 @@ public class CensusAnalyserTest {
     private static final String INDIA_CENSUS_CSV_FILE_PATH = "./src/test/resources/IndiaStateCensusData.csv";
     private static final String WRONG_CSV_FILE_PATH = "./src/main/resources/IndiaStateCensusData.csv";
     private static final String INDIAN_STATE_CODE="/home/admin293/Downloads/CensusAnalyser/CensusAnalyser/src/test/resources/IndiaStateCode.csv";
+    private static final String WRONG_FILE_TYPE="./src/test/resources/IndiaStateCensusData.pdf";
 
     @Test
     public void givenIndianCensusCSVFileReturnsCorrectRecords() {
@@ -51,11 +52,24 @@ public class CensusAnalyserTest {
         try {
             censusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_FILE_PATH);
             sortedCensusData = censusAnalyser.getStateWiseSortedCensusData();
-            IndiaCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusCSV[].class);
+            IndiaCensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusDAO[].class);
             Assert.assertEquals("Andhra Pradesh",censusCSV[0].state);
         } catch (CensusAnalyserException e) {
             e.printStackTrace();
         }
 
     }
+
+    @Test
+    public void givenWhenStateCSVFile_WhenCorrectButTypeIncorrect_ShouldThrowException() {
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
+        try {
+            censusAnalyser.loadIndiaCensusData(INDIAN_STATE_CODE);
+        } catch (CensusAnalyserException e) {
+                Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_INCORRECT,e.type);
+                e.printStackTrace();
+        }
+    }
+
+
 }
