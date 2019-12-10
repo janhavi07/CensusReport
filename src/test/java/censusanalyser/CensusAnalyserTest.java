@@ -77,7 +77,7 @@ public class CensusAnalyserTest {
         try {
             censusAnalyser.loadStateCode(INDIA_CENSUS_CSV_FILE_PATH);
         } catch (CensusAnalyserException e) {
-            Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_INCORRECT,e.type);
         }
     }
 
@@ -86,6 +86,15 @@ public class CensusAnalyserTest {
         CensusAnalyser censusAnalyser = new CensusAnalyser();
         try {
             censusAnalyser.loadStateCode(INDIA_CENSUS_CSV_FILE_PATH);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_INCORRECT,e.type);
+        }
+    }
+    @Test
+    public void givenStateCodeFile_WhenCorrectButIncorrectDelimiter_ShouldThrowException() {
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
+        try {
+            censusAnalyser.loadStateCode(INDIAN_STATE_CODE);
         } catch (CensusAnalyserException e) {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_INCORRECT,e.type);
         }
