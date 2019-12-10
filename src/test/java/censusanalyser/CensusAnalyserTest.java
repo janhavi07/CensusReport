@@ -66,10 +66,18 @@ public class CensusAnalyserTest {
         try {
             censusAnalyser.loadIndiaCensusData(INDIAN_STATE_CODE);
         } catch (CensusAnalyserException e) {
-                Assert.assertEquals(CensusAnalyserException.ExceptionType.HEADER_INCORRECT,e.type);
+                Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
                 e.printStackTrace();
         }
     }
 
-
+    @Test
+    public void givenStateCodeFile_WhenCorrectButTypeIncorrect_ShouldThrowException() {
+        CensusAnalyser censusAnalyser = new CensusAnalyser();
+        try {
+            censusAnalyser.loadStateCode(INDIA_CENSUS_CSV_FILE_PATH);
+        } catch (CensusAnalyserException e) {
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
+        }
+    }
 }
