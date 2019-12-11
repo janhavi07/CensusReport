@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
     List<IndiaCensusDAO> censusList=null;
@@ -23,9 +24,9 @@ public class CensusAnalyser {
             Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
             ICSVBuilder icsvBuilder=CSVBuilderFactory.createCSVBuilder();
             Iterator<IndiaCensusCSV> csvFileIterator=icsvBuilder.getCSVFileIterator(reader,IndiaCensusCSV.class);
-            while(csvFileIterator.hasNext()){
-                this.censusList.add(new IndiaCensusDAO(csvFileIterator.next()));
-            }
+            Iterable<IndiaCensusCSV> csvIterable= () -> csvFileIterator;
+            StreamSupport.stream(csvIterable.spliterator(),false).
+                    forEach(indiaCensusCSV -> censusList.add(new IndiaCensusDAO(indiaCensusCSV)));
             return censusList.size();
         } catch (IOException e) {
             throw new CensusAnalyserException(e.getMessage(),
@@ -93,5 +94,13 @@ public class CensusAnalyser {
                 e.printStackTrace();
             }
         }
+    }
+
+    public String getAreaWiseSortedCensusData() {
+        toThrowNullPointerException();
+        Comparator<IndiaCensusDAO> censusCSVComparator= Comparator.comparing(census -> census.areaInSqKm);
+        this.sort(censusCSVComparator);
+        String sortedStateCensusJson=new Gson().toJson(censusList);
+        return sortedStateCensusJson;
     }
 }
