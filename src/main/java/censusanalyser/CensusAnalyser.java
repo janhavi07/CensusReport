@@ -1,16 +1,9 @@
 package censusanalyser;
 
-import com.csvReader.CSVBuilderException;
-import com.csvReader.CSVBuilderFactory;
-import com.csvReader.ICSVBuilder;
 import com.google.gson.Gson;
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
     public enum Country { INDIA,US
@@ -20,13 +13,18 @@ public class CensusAnalyser {
     public CensusAnalyser(){
         this.censusStateMap =new HashMap<>();
     }
-    public int loadIndiaCensusData(String... csvFilePath) throws CensusAnalyserException {
-        censusStateMap=new CensusLoader().loadCensusData(Country.INDIA,csvFilePath);
+
+    public int loadCensus(CensusAnalyser.Country country) throws CensusAnalyserException {
+        Object record=new CensusAdapterFactory().getCensusData(country);
+        return censusStateMap.size();
+    }
+    public int loadIndiaCensusData(CensusAnalyser.Country country,String... csvFilePath) throws CensusAnalyserException {
+        censusStateMap=new IndiaCensusAdapter().loadCountryData(Country.INDIA,csvFilePath);
         return censusStateMap.size();
     }
 
-    public int loadUSCensusData(String... usCensusData) throws CensusAnalyserException {
-        censusStateMap=new CensusLoader().loadCensusData(Country.US,usCensusData[0]);
+    public int loadUSCensusData(CensusAnalyser.Country country,String... usCensusData) throws CensusAnalyserException {
+        censusStateMap=new USCensusAdapter().loadCountryData(Country.US,usCensusData);
         return censusStateMap.size();
     }
 

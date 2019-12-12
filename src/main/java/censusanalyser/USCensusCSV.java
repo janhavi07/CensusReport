@@ -4,47 +4,64 @@ import com.opencsv.bean.CsvBindByName;
 
 public class USCensusCSV {
 
+
+
     @CsvBindByName(column = "State",required = true)
-    public String State;
+    public String state;
 
-    @CsvBindByName(column = "State Id",required = true)
-    public int StateId;
+    @CsvBindByName(column = "StateId",required = true)
+    public String StateId;
 
-    @CsvBindByName(column = "Total area",required = true)
+    @CsvBindByName(column = "Totalarea",required = true)
     public double Area;
 
-    @CsvBindByName(column = "Population Density",required = true)
+    @CsvBindByName(column = "Population",required = true)
+    public int Population;
+
+    @CsvBindByName(column = "Housingunits",required = true)
+    public int Housingunits;
+
+    @CsvBindByName(column = "PopulationDensity",required = true)
     public double populationDensity;
 
-    public String getUsState() {
-        return State;
-    }
+    @CsvBindByName(column = "Waterarea",required = true)
+    public double Waterarea;
 
-    public void setUsState(String usState) {
-        this.State = usState;
-    }
+    @CsvBindByName(column = "Landarea",required = true)
+    public double Landarea;
 
-    public int getUsStateId() {
-        return StateId;
-    }
+    @CsvBindByName(column = "HousingDensity",required = true)
+    public double HousingDensity;
 
-    public void setUsStateId(int usStateId) {
-        this.StateId = usStateId;
-    }
-
-    public double getUsArea() {
-        return Area;
-    }
-
-    public void setUsArea(double usArea) {
-        this.Area = usArea;
-    }
-
-    public double getPopulationDensity() {
-        return populationDensity;
-    }
-
-    public void setPopulationDensity(int populationDensity) {
-        this.populationDensity = populationDensity;
-    }
+//    public String getUsState() {
+//        return State;
+//    }
+//
+//    public void setUsState(String usState) {
+//        this.State = usState;
+//    }
+//
+//    public String getUsStateId() {
+//        return StateId;
+//    }
+//
+//    public void setUsStateId(String usStateId) {
+//        this.StateId = usStateId;
+//    }
+//
+//    public double getUsArea() {
+//        return Area;
+//    }
+//
+//    public void setUsArea(double usArea) {
+//        this.Area = usArea;
+//    }
+//
+//    public double getPopulationDensity() {
+//        return populationDensity;
+//    }
+//
+//    public void setPopulationDensity(double populationDensity) {
+//        this.populationDensity = populationDensity;
+//    }
 }
