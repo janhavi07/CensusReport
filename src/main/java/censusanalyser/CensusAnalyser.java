@@ -13,18 +13,20 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
+    public enum Country { INDIA,US
+}
     Map<String,CensusDAO> censusStateMap =null;
 
     public CensusAnalyser(){
         this.censusStateMap =new HashMap<>();
     }
     public int loadIndiaCensusData(String... csvFilePath) throws CensusAnalyserException {
-        censusStateMap=new CensusLoader().loadCensusData(IndiaCensusCSV.class,csvFilePath[0]);
+        censusStateMap=new CensusLoader().loadCensusData(Country.INDIA,csvFilePath);
         return censusStateMap.size();
     }
 
     public int loadUSCensusData(String... usCensusData) throws CensusAnalyserException {
-        censusStateMap=new CensusLoader().loadCensusData(USCensusCSV.class,usCensusData[0]);
+        censusStateMap=new CensusLoader().loadCensusData(Country.US,usCensusData[0]);
         return censusStateMap.size();
     }
 
