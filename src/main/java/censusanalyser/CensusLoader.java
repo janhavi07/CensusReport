@@ -12,9 +12,18 @@ import java.util.Map;
 import java.util.stream.StreamSupport;
 
 public class CensusLoader {
+
     Map<String,CensusDAO> censusStateMap =null;
 
-    public  <E> Map<String,CensusDAO> loadCensusData(Class<E> censusCsvClass,String... csvFile) throws CensusAnalyserException {
+    public Map<String,CensusDAO> loadCensusData(CensusAnalyser.Country country,String... csvFile) throws CensusAnalyserException {
+        if(country.equals(CensusAnalyser.Country.INDIA))
+            return this.loadCensusData(IndiaCensusCSV.class,csvFile);
+        else if (country.equals(CensusAnalyser.Country.US))
+                return this.loadCensusData(USCensusCSV.class,csvFile);
+        else throw new CensusAnalyserException("Incorrect Country",CensusAnalyserException.ExceptionType.INCORRECT_COUNTRY);
+    }
+
+    private  <E> Map<String,CensusDAO> loadCensusData(Class<E> censusCsvClass,String... csvFile) throws CensusAnalyserException {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(csvFile[0]));
             ICSVBuilder icsvBuilder= CSVBuilderFactory.createCSVBuilder();
@@ -42,7 +51,7 @@ public class CensusLoader {
         }
     }
 
-    public int loadStateCode(Map<String,CensusDAO> censusStateMap,String indianStateCode) throws CensusAnalyserException {
+    private int loadStateCode(Map<String,CensusDAO> censusStateMap,String indianStateCode) throws CensusAnalyserException {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(indianStateCode));
             ICSVBuilder icsvBuilder=CSVBuilderFactory.createCSVBuilder();
