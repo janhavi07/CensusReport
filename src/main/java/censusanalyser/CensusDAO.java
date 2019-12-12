@@ -18,13 +18,4 @@ public class IndiaCensusDAO {
         population=csvFileIterator.population;
     }
 
-    @Override
-    public String toString() {
-        return "IndiaCensusDAO{" +
-                "population=" + population +
-                ", densityPerSqKm=" + densityPerSqKm +
-                ", areaInSqKm=" + areaInSqKm +
-                ", state='" + state + '\'' +
-                '}';
-    }
 }
