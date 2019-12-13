@@ -4,8 +4,6 @@ import com.opencsv.bean.CsvBindByName;
 
 public class USCensusCSV {
 
-
-
     @CsvBindByName(column = "State",required = true)
     public String state;
 
@@ -34,40 +32,17 @@ public class USCensusCSV {
     public double HousingDensity;
 
     public USCensusCSV(String state, String stateCode, int population, int area) {
+        this.state = state;
+        StateId = stateCode;
+        Area = area;
+        Population = population;
+        //Housingunits = housingunits;
+      //  this.populationDensity = population;
+        //Waterarea = waterarea;
+       // Landarea = landarea;
+       // HousingDensity = housingDensity;
     }
 
     public USCensusCSV() {
     }
-
-    //    public String getUsState() {
-//        return State;
-//    }
-//
-//    public void setUsState(String usState) {
-//        this.State = usState;
-//    }
-//
-//    public String getUsStateId() {
-//        return StateId;
-//    }
-//
-//    public void setUsStateId(String usStateId) {
-//        this.StateId = usStateId;
-//    }
-//
-//    public double getUsArea() {
-//        return Area;
-//    }
-//
-//    public void setUsArea(double usArea) {
-//        this.Area = usArea;
-//    }
-//
-//    public double getPopulationDensity() {
-//        return populationDensity;
-//    }
-//
-//    public void setPopulationDensity(double populationDensity) {
-//        this.populationDensity = populationDensity;
-//    }
 }
