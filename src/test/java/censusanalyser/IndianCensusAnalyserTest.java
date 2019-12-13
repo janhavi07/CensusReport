@@ -114,7 +114,7 @@ public class IndianCensusAnalyserTest {
         String sortedCensusData = null;
         try {
             censusAnalyser.loadCensus(CensusAnalyser.Country.INDIA,INDIA_CENSUS_CSV_FILE_PATH,INDIAN_STATE_CODE);
-            sortedCensusData = censusAnalyser.getStateWiseSortedCensusData();
+            sortedCensusData = censusAnalyser.getSort(CensusAnalyser.SortField.STATE);
             CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
             Assert.assertEquals("Andhra Pradesh", censusCSV[0].state);
         } catch (CensusAnalyserException e) {
@@ -128,7 +128,7 @@ public class IndianCensusAnalyserTest {
         String sortedCensusData = null;
         try {
             censusAnalyser.loadCensus(CensusAnalyser.Country.INDIA,INDIA_CENSUS_CSV_FILE_PATH,INDIAN_STATE_CODE);
-            sortedCensusData = censusAnalyser.getPopulationWiseSortedCensusData();
+            sortedCensusData = censusAnalyser.getSort(CensusAnalyser.SortField.POPULATION);
             CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
             Assert.assertEquals("Uttar Pradesh", censusCSV[28].state);
         } catch (CensusAnalyserException e) {
@@ -141,7 +141,7 @@ public class IndianCensusAnalyserTest {
         String sortedCensusData = null;
         try {
             censusAnalyser.loadCensus(CensusAnalyser.Country.INDIA,INDIA_CENSUS_CSV_FILE_PATH,INDIAN_STATE_CODE);
-            sortedCensusData = censusAnalyser.getAreaWiseSortedCensusData();
+            sortedCensusData = censusAnalyser.getSort(CensusAnalyser.SortField.AREA);
             CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
             Assert.assertEquals("Rajasthan", censusCSV[28].state);
         } catch (CensusAnalyserException e) {
@@ -155,7 +155,7 @@ public class IndianCensusAnalyserTest {
         String sortedCensusData = null;
         try {
             censusAnalyser.loadCensus(CensusAnalyser.Country.INDIA,INDIA_CENSUS_CSV_FILE_PATH,INDIAN_STATE_CODE);
-            sortedCensusData = censusAnalyser.getDensityWiseSortedCensusData();
+            sortedCensusData = censusAnalyser.getSort(CensusAnalyser.SortField.DENSITY);
             CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
             Assert.assertEquals("Bihar", censusCSV[28].state);
         } catch (CensusAnalyserException e) {

@@ -16,5 +16,5 @@ dependencies {
     testImplementation 'org.hamcrest:hamcrest-library:1.3'
     compile 'com.google.code.gson:gson:2.2.+'
     compile "com.opencsv:opencsv:4.0"
-    compile (files("/home/admin293/Desktop/CsvReaderJar/out/artifacts/CsvReaderJar_main_jar/CsvReaderJar.main.jar"))
+    compile (files("/home/bridgeit/Downloads/CSVJar-master/out/artifacts/CsvReaderJar_main_jar/CsvReaderJar.main.jar"))
 }
