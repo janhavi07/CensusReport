@@ -108,7 +108,7 @@ public class IndianCensusAnalyserTest {
         }
     }
 
-        @Test
+    @Test
     public void givenBothTheCsvFile_WhenSortedOnState_ShouldReturnSortedResult() {
         CensusAnalyser censusAnalyser = new CensusAnalyser(CensusAnalyser.Country.INDIA);
         String sortedCensusData = null;
@@ -131,6 +131,33 @@ public class IndianCensusAnalyserTest {
             sortedCensusData = censusAnalyser.getPopulationWiseSortedCensusData();
             CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
             Assert.assertEquals("Uttar Pradesh", censusCSV[28].state);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void givenIndianCensusData_WhenSortedOnArea_ShouldReturnLargestArea() {
+        CensusAnalyser censusAnalyser = new CensusAnalyser(CensusAnalyser.Country.INDIA);
+        String sortedCensusData = null;
+        try {
+            censusAnalyser.loadCensus(CensusAnalyser.Country.INDIA,INDIA_CENSUS_CSV_FILE_PATH,INDIAN_STATE_CODE);
+            sortedCensusData = censusAnalyser.getAreaWiseSortedCensusData();
+            CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
+            Assert.assertEquals("Rajasthan", censusCSV[28].state);
+        } catch (CensusAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenIndianCensusData_WhenSortedOnDensity_ShouldReturnHighestDensityState() {
+        CensusAnalyser censusAnalyser = new CensusAnalyser(CensusAnalyser.Country.INDIA);
+        String sortedCensusData = null;
+        try {
+            censusAnalyser.loadCensus(CensusAnalyser.Country.INDIA,INDIA_CENSUS_CSV_FILE_PATH,INDIAN_STATE_CODE);
+            sortedCensusData = censusAnalyser.getDensityWiseSortedCensusData();
+            CensusDAO[] censusCSV = new Gson().fromJson(sortedCensusData, CensusDAO[].class);
+            Assert.assertEquals("Bihar", censusCSV[28].state);
         } catch (CensusAnalyserException e) {
             e.printStackTrace();
         }
