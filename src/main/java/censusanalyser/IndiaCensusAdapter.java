@@ -13,50 +13,13 @@ import java.util.stream.StreamSupport;
 
 public class IndiaCensusAdapter extends CensusAdapter {
 
-    //Map<String,CensusDAO> censusStateMap =null;
-
-//    public Map<String,CensusDAO> loadCensusData(CensusAnalyser.Country country,String... csvFile) throws CensusAnalyserException {
-//        if(country.equals(CensusAnalyser.Country.INDIA))
-//            return this.loadCensusData(IndiaCensusCSV.class,csvFile);
-//        else if (country.equals(CensusAnalyser.Country.US))
-//                return this.loadCensusData(USCensusCSV.class,csvFile);
-//        else throw new CensusAnalyserException("Incorrect Country",CensusAnalyserException.ExceptionType.INCORRECT_COUNTRY);
-//    }
-
     @Override
-    protected <E> Map<String, CensusDAO> loadCountryData(CensusAnalyser.Country country, String... csvFile) throws CensusAnalyserException {
+    protected <E> Map<String, CensusDAO> loadCountryData(String... csvFile) throws CensusAnalyserException {
+
         Map<String,CensusDAO> censusStateMap=super.loadCensusData(IndiaCensusCSV.class, csvFile);
         this.loadStateCode(censusStateMap,csvFile[1]);
         return censusStateMap;
     }
-
-//    public <E> Map<String,CensusDAO> loadCensusData(Class<E> censusCsvClass, String... csvFile) throws CensusAnalyserException {
-//        try {
-//            Reader reader = Files.newBufferedReader(Paths.get(csvFile[0]));
-//            ICSVBuilder icsvBuilder= CSVBuilderFactory.createCSVBuilder();
-//            Iterator<E> csvFileIterator=icsvBuilder.getCSVFileIterator(reader,censusCsvClass);
-//            Iterable<E> csvIterable= () -> csvFileIterator;
-//            if (censusCsvClass.getName().equals("censusanalyser.IndiaCensusCSV")){
-//                StreamSupport.stream(csvIterable.spliterator(), false).
-//                        map(IndiaCensusCSV.class::cast).
-//                        forEach(censusCSV -> censusStateMap.put(censusCSV.state, new CensusDAO(censusCSV)));
-//            } else if(censusCsvClass.getName().equals("censusanalyser.USCensusCSV")) {
-//                StreamSupport.stream(csvIterable.spliterator(), false).
-//                        map(USCensusCSV.class::cast).
-//                        forEach(censusCSV -> censusStateMap.put(censusCSV.state, new CensusDAO(censusCSV)));
-//            }
-//            if(csvFile.length==1) return censusStateMap;
-//            this.loadStateCode(censusStateMap,csvFile[1]);
-//            return censusStateMap;
-//        } catch (IOException e) {
-//            throw new CensusAnalyserException(e.getMessage(),
-//                    CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
-//        } catch (CSVBuilderException e) {
-//            throw new CensusAnalyserException(e.getMessage(),e.type.name());
-//        } catch (RuntimeException e) {
-//            throw new CensusAnalyserException("Header missing", CensusAnalyserException.ExceptionType.HEADER_INCORRECT_OR_INCORRECT_DELIMITER);
-//        }
-//    }
 
     protected int loadStateCode(Map<String,CensusDAO> censusStateMap,String indianStateCode) throws CensusAnalyserException {
         try {
@@ -72,7 +35,7 @@ public class IndiaCensusAdapter extends CensusAdapter {
             throw new CensusAnalyserException(e.getMessage(),
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         } catch (RuntimeException e){
-            throw new CensusAnalyserException("Header Missing",
+            throw new CensusAnalyserException("Header Missing or Incorrect Delimiter",
                     CensusAnalyserException.ExceptionType.HEADER_INCORRECT_OR_INCORRECT_DELIMITER);
         } catch (CSVBuilderException e) {
             throw new CensusAnalyserException(e.getMessage(),e.type.name());

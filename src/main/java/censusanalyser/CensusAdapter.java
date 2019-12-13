@@ -14,15 +14,15 @@ import java.util.Map;
 import java.util.stream.StreamSupport;
 
 public abstract class CensusAdapter {
-    Map<String,CensusDAO> censusStateMap=new HashMap<>();
 
-    protected abstract <E> Map<String,CensusDAO> loadCountryData(CensusAnalyser.Country country, String... csvFile) throws CensusAnalyserException;
+    protected abstract <E> Map<String,CensusDAO> loadCountryData(String... csvFile) throws CensusAnalyserException;
 
     public <E> Map<String,CensusDAO> loadCensusData(Class<E> censusCsvClass,String... csvFile) throws CensusAnalyserException {
         try {
+            Map<String,CensusDAO> censusStateMap=new HashMap<>();
             Reader reader = Files.newBufferedReader(Paths.get(csvFile[0]));
             ICSVBuilder icsvBuilder= CSVBuilderFactory.createCSVBuilder();
-            Iterator<E> csvFileIterator = icsvBuilder.getCSVFileIterator(reader, censusCsvClass);
+            Iterator<E> csvFileIterator = icsvBuilder.getCSVFileIterator(reader,censusCsvClass);
             Iterable<E> csvIterable = () -> csvFileIterator;
             if (censusCsvClass.getName().equals("censusanalyser.IndiaCensusCSV")) {
                 StreamSupport.stream(csvIterable.spliterator(), false).
@@ -35,12 +35,12 @@ public abstract class CensusAdapter {
             }
             return censusStateMap;
         } catch (IOException e) {
-            throw new CensusAnalyserException(e.getMessage(),
+            throw new CensusAnalyserException("Incorrect File Input",
                     CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         } catch (CSVBuilderException e) {
             throw new CensusAnalyserException(e.getMessage(), e.type.name());
         } catch (RuntimeException e) {
-            throw new CensusAnalyserException(e.getMessage(),
+            throw new CensusAnalyserException("Incorrect Header or Delimiter",
                     CensusAnalyserException.ExceptionType.HEADER_INCORRECT_OR_INCORRECT_DELIMITER);
         }
     }
