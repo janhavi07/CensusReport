@@ -9,6 +9,9 @@ public class CensusAnalyser {
     private Object country;
 
     public enum Country { INDIA,US}
+    public enum SortField{ STATE,AREA,DENSITY,POPULATION
+
+    }
 
     Map<String,CensusDAO> censusStateMap;
 
@@ -35,29 +38,9 @@ public class CensusAnalyser {
         }
     }
 
-    public String getStateWiseSortedCensusData() {
-        this.toThrowNullException();
-        Comparator<CensusDAO> censusCSVComparator= Comparator.comparing(census -> census.state);
+    public String getSort(CensusAnalyser.SortField sortField) {
+        Comparator<CensusDAO> censusCSVComparator = new SortingFactory().getField(sortField);
         return this.getSortedString(censusCSVComparator);
-    }
-
-    public String getPopulationWiseSortedCensusData() {
-        this.toThrowNullException();
-        Comparator<CensusDAO> censusCSVComparator= Comparator.comparing(census -> census.population);
-        return this.getSortedString(censusCSVComparator);
-    }
-
-    public String getAreaWiseSortedCensusData() {
-        this.toThrowNullException();
-        Comparator<CensusDAO> censusCSVComparator= Comparator.comparing(census -> census.areaInSqKm);
-        return this.getSortedString(censusCSVComparator);
-    }
-
-    public String getDensityWiseSortedCensusData() {
-        this.toThrowNullException();
-        Comparator<CensusDAO> censusCSVComparator= Comparator.comparing(census -> census.densityPerSqKm);
-        return this.getSortedString(censusCSVComparator);
-
     }
 
     private String getSortedString(Comparator<CensusDAO> censusCSVComparator){
