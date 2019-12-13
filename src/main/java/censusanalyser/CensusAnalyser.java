@@ -8,23 +8,14 @@ import java.util.stream.Collectors;
 public class CensusAnalyser {
     public enum Country { INDIA,US
 }
-    Map<String,CensusDAO> censusStateMap =null;
+    Map<String,CensusDAO> censusStateMap;
 
     public CensusAnalyser(){
         this.censusStateMap =new HashMap<>();
     }
 
     public int loadCensus(CensusAnalyser.Country country) throws CensusAnalyserException {
-        Object record=new CensusAdapterFactory().getCensusData(country);
-        return censusStateMap.size();
-    }
-    public int loadIndiaCensusData(CensusAnalyser.Country country,String... csvFilePath) throws CensusAnalyserException {
-        censusStateMap=new IndiaCensusAdapter().loadCountryData(Country.INDIA,csvFilePath);
-        return censusStateMap.size();
-    }
-
-    public int loadUSCensusData(CensusAnalyser.Country country,String... usCensusData) throws CensusAnalyserException {
-        censusStateMap=new USCensusAdapter().loadCountryData(Country.US,usCensusData);
+        censusStateMap=new CensusAdapterFactory().getCensusData(country);
         return censusStateMap.size();
     }
 
@@ -52,7 +43,6 @@ public class CensusAnalyser {
             }
         }
     }
-
     private void toThrowNullException(){
         if( censusStateMap ==null || censusStateMap.size()==0){
             try {
