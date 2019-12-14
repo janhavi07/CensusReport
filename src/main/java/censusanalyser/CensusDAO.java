@@ -26,6 +26,6 @@ public class CensusDAO {
         if(country.equals(CensusAnalyser.Country.US))
             return new USCensusCSV(state,StateCode,population,areaInSqKm);
         else
-            return new IndiaCensusCSV(state,areaInSqKm,population,densityPerSqKm);
+            return new IndiaCensusCSV(state,population,areaInSqKm,densityPerSqKm);
     }
 }
