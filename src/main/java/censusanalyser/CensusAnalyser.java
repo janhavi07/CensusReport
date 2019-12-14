@@ -9,9 +9,6 @@ public class CensusAnalyser {
     private Object country;
 
     public enum Country { INDIA,US}
-    public enum SortField{ STATE,AREA,DENSITY,POPULATION
-
-    }
 
     Map<String,CensusDAO> censusStateMap;
 
@@ -38,8 +35,13 @@ public class CensusAnalyser {
         }
     }
 
-    public String getSort(CensusAnalyser.SortField sortField) {
-        Comparator<CensusDAO> censusCSVComparator = new SortingFactory().getField(sortField);
+    public String getSort(Sorting.SortField... sortField) {
+        Comparator<CensusDAO> censusCSVComparator = null;
+        if(sortField.length==2) {
+            censusCSVComparator = new Sorting().getField(sortField[0]).thenComparing(new Sorting().getField(sortField[1]));
+            return this.getSortedString(censusCSVComparator);
+        }
+        censusCSVComparator=new Sorting().getField(sortField[0]);
         return this.getSortedString(censusCSVComparator);
     }
 
