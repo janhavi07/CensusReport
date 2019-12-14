@@ -10,8 +10,6 @@ public class IndiaStateCode {
     @CsvBindByName(column = "StateCode",required = true)
     public String stateCode;
 
-
-
     public String getState() {
         return stateName;
     }

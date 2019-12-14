@@ -36,11 +36,6 @@ public class USCensusCSV {
         StateId = stateCode;
         Area = area;
         Population = population;
-        //Housingunits = housingunits;
-      //  this.populationDensity = population;
-        //Waterarea = waterarea;
-       // Landarea = landarea;
-       // HousingDensity = housingDensity;
     }
 
     public USCensusCSV() {
